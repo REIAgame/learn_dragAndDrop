@@ -1,0 +1,14 @@
+body{
+    background:rgb(0, 159, 170);
+}
+#button_add{
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+    background:rgba(255, 255, 255, 0.589);
+    border-radius: 100px;
+}
+#button_add:hover{
+    filter: brightness(0.3)
+}
