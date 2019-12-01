@@ -1,14 +1,16 @@
 body{
     background:rgb(0, 159, 170);
 }
-#button_add{
+#add_button{
     width: 100px;
     height: 100px;
-    margin: 0;
-    padding: 0;
+
+    /* margin: 0; */
+    /* padding: 0; */
     background:rgba(255, 255, 255, 0.589);
     border-radius: 100px;
+    float:right;
 }
-#button_add:hover{
+#add_button:hover{
     filter: brightness(0.3)
 }
