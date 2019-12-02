@@ -1,27 +1,43 @@
 class taskbox{
-    task_box=this.createTag("div",{},{'margin':'10px','float':'left','width':'200px','height':'300px','background-color':'rgba(255, 255, 255, 0.589)'});
-    task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{'border-style':'none','margin':'3px','border-radius':'3px','width':'180px'});
-    button_task_add=this.createTag("button",{},{});
+    task_box;
+    button_task_add;
+    button_task_del;
     taskCount=0;
     parent;
-    add_task_id;
+    width=0;
+    task_box_anim;
     /**
      * 
      * @param {HTMLElement} parent this contained html parent
      * @param {string} id this id
      */
     constructor(parent,id){
+        this.task_box=this.createTag("div",{},{'margin':'10px','float':'left','width':'0%','height':'0px','background-color':'rgba(255, 255, 255, 0.589)'});
+        this.button_task_add=this.createTag("button",{},{});
+        this.button_task_del=this.createTag("button",{},{});
         this.task_box.id=id;   
         this.parent=parent;
-        this.task.id=this.task_box.id+this.taskCount;
-        this.taskCount++;
+
         this.button_task_add.innerText="追加";
         this.button_task_add.id=this.task_box.id+"add";
-        this.add_task_id=this.button_task_add.id;
+        this.button_task_del.innerText="削除";
+        this.button_task_del.id=this.task_box.id+"del";
+
         this.parent.appendChild(this.task_box);
-        this.task_box.appendChild(this.task);
+        this.task_box_anim=setInterval(()=>{
+            if(this.task_box.style.width=="20%"){
+                clearInterval(this.task_box_anim);
+                return;
+            }
+            this.task_box.style.height=String(this.width*15)+"px";
+            this.task_box.style.width=String(this.width)+"%";
+            this.width++;
+        },10);
+        this.task_box.appendChild(this.task_create());
         this.task_box.appendChild(this.button_task_add);
-        this.button_task_add.addEventListener("click",this.task_add);
+        this.task_box.appendChild(this.button_task_del);
+        this.button_task_del.addEventListener("click",this.task_delete.bind(this));
+        this.button_task_add.addEventListener("click",this.task_add.bind(this));
     }
     /**
      * @param element html tag name : string
@@ -39,10 +55,30 @@ class taskbox{
         }
         return tag;
     }
-    task_add(remove,add,parent){
-        new HTMLElement(parent).remove();
-        parent.appendChild(add);
-        parent.appendChild(remove);
+    /**
+     * @description create input tag for task and id set and taskCount plus one;
+     * @return HTMLElement input
+     */
+    task_create(){
+        var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{'border-style':'none','margin':'3px','border-radius':'3px','width':'90%'});
+        task.id=this.task_box.id+this.taskCount;
         this.taskCount++;
+        return task;
     }
+    task_delete(){
+        this.button_task_add.remove();
+        this.button_task_del.remove();
+        document.getElementById(this.task_box.id+(this.taskCount-1)).remove();
+        this.taskCount--;
+        this.task_box.appendChild(this.button_task_add);
+        this.task_box.appendChild(this.button_task_del);
+    }
+    task_add(){
+        this.button_task_add.remove();
+        this.button_task_del.remove();
+        this.task_box.appendChild(this.task_create());
+        this.task_box.appendChild(this.button_task_add);
+        this.task_box.appendChild(this.button_task_del);
+    }
+    
 }
