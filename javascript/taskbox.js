@@ -5,6 +5,7 @@ class taskbox{
     taskCount=0;
     parent;
     width=0;
+    ta;
     task_box_anim;
     /**
      * 
@@ -12,9 +13,9 @@ class taskbox{
      * @param {string} id this id
      */
     constructor(parent,id){
-        this.task_box=this.createTag("div",{},{'margin':'10px','float':'left','width':'0%','height':'0px','background-color':'rgba(255, 255, 255, 0.589)'});
-        this.button_task_add=this.createTag("button",{},{});
-        this.button_task_del=this.createTag("button",{},{});
+        this.task_box=this.createTag("div",{},{"position":"relative",'margin':'10px','float':'left','width':'0%','height':'0px','background-color':'rgba(255, 255, 255, 0.589)'});
+        this.button_task_add=this.createTag("button",{},{"position":"absolute","top":"90%","left":"10%"});
+        this.button_task_del=this.createTag("button",{},{"position":"absolute","top":"90%","right":"10%"});
         this.task_box.id=id;   
         this.parent=parent;
 
@@ -39,6 +40,7 @@ class taskbox{
         this.button_task_del.addEventListener("click",this.task_delete.bind(this));
         this.button_task_add.addEventListener("click",this.task_add.bind(this));
     }
+    
     /**
      * @param element html tag name : string
      * @param attrs atatch atribute : Dictionary<string,string> {attrName: attrValue}
@@ -60,7 +62,7 @@ class taskbox{
      * @return HTMLElement input
      */
     task_create(){
-        var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{'border-style':'none','margin':'3px','border-radius':'3px','width':'90%'});
+        var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{"float":"left","text-align":"center","display":"block",'border-style':'none','margin':'5px auto','border-radius':'3px','width':'10px',"clear":"both"});
         task.id=this.task_box.id+this.taskCount;
         this.taskCount++;
         return task;
@@ -74,6 +76,7 @@ class taskbox{
         this.task_box.appendChild(this.button_task_del);
     }
     task_add(){
+        console.log(this);
         this.button_task_add.remove();
         this.button_task_del.remove();
         this.task_box.appendChild(this.task_create());
