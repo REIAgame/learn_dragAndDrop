@@ -62,7 +62,7 @@ class taskbox{
      * @return HTMLElement input
      */
     task_create(){
-        var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{"float":"left","text-align":"center","display":"block",'border-style':'none','margin':'5px auto','border-radius':'3px','width':'10px',"clear":"both"});
+        var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{"float":"left","text-align":"center","display":"block",'border-style':'none','margin':'5px auto','border-radius':'3px','width':'90%',"clear":"both"});
         task.id=this.task_box.id+this.taskCount;
         this.taskCount++;
         return task;
