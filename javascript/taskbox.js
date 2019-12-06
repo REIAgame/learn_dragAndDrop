@@ -5,7 +5,6 @@ class taskbox{
     taskCount=0;
     parent;
     width=0;
-    input_togle;
     task_box_anim;
     /**
      * 
@@ -35,8 +34,7 @@ class taskbox{
             this.task_box.style.width=String(this.width)+"%";
             this.width++;
         },10);
-        this.task_box.appendChild(this.task_create());
-        this.task_box.appendChild()
+        this.task_create();
         this.task_box.appendChild(this.button_task_add);
         this.task_box.appendChild(this.button_task_del);
         this.button_task_del.addEventListener("click",this.task_delete.bind(this));
@@ -67,7 +65,30 @@ class taskbox{
         var task=this.createTag("input",{'type':'text','placeholder':'タスクを入力してください'},{"float":"left","text-align":"center","display":"block",'border-style':'none','margin':'5px auto','border-radius':'3px','width':'90%',"clear":"both"});
         task.id=this.task_box.id+this.taskCount;
         this.taskCount++;
-        return task;
+        var img=this.createTag("img",{"src":""},{"width":"5%","height":"5%","margin-left":"2%","margin-top":"3%"});
+        
+        this.imgToBase64("../t.png",function(data,classes){
+            img.src=data;
+            
+            classes.task_box.appendChild(task);
+            classes.task_box.appendChild(img);
+        })
+        
+    }
+    imgToBase64(filepath,func){
+        var xhr =new XMLHttpRequest(filepath.split("/")[1]);
+        xhr.onload=function(){
+            var read =new FileReader();
+            read.onloadend=function(){
+                func(read.result,this);
+                
+                
+            }.bind(this);
+            read.readAsDataURL(xhr.response);
+        }.bind(this);
+        xhr.open("GET",filepath);
+        xhr.responseType="blob";
+        xhr.send();
     }
     task_delete(){
         this.button_task_add.remove();
@@ -81,7 +102,7 @@ class taskbox{
         console.log(this);
         this.button_task_add.remove();
         this.button_task_del.remove();
-        this.task_box.appendChild(this.task_create());
+        this.task_create();
         this.task_box.appendChild(this.button_task_add);
         this.task_box.appendChild(this.button_task_del);
     }
