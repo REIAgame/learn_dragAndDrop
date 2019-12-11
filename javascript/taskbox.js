@@ -66,13 +66,14 @@ class taskbox{
         task.id=this.task_box.id+this.taskCount;
         this.taskCount++;
         var img=this.createTag("img",{"src":""},{"width":"5%","height":"5%","margin-left":"2%","margin-top":"3%"});
-        
         this.imgToBase64("../t.png",function(data,classes){
             img.src=data;
-            
+            img.id="t"+task.id;
+            img.addEventListener("dragstart",this.task_ds);
+            img.addEventListener("dragend",this.task_de);
             classes.task_box.appendChild(task);
             classes.task_box.appendChild(img);
-        })
+        }.bind(this))
         
     }
     imgToBase64(filepath,func){
@@ -106,5 +107,11 @@ class taskbox{
         this.task_box.appendChild(this.button_task_add);
         this.task_box.appendChild(this.button_task_del);
     }
-    
+    task_ds(e){
+        var any=
+        console.log(any);
+    }
+    task_de(e){
+        console.log(e);
+    }
 }
